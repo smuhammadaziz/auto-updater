@@ -1,6 +1,6 @@
 {
 	"name": "ksb-pos",
-	"version": "2.0.0",
+	"version": "1.0.0",
 	"private": true,
 	"description": "KSB-POS",
 	"author": "KSB-SOFT",
@@ -100,7 +100,8 @@
 					]
 				}
 			],
-			"icon": "assets/ksb.ico"
+			"icon": "assets/ksb.ico",
+			"artifactName": "KSB-POS-${version}.${ext}"
 		},
 		"publish": {
 			"provider": "github",
