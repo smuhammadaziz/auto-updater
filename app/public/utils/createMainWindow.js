@@ -15,6 +15,7 @@ exports.createMainWindow = async () => {
 			spellcheck: false,
 			webSecurity: false,
 			partition: "persist:main",
+			preload: path.join(__dirname, "../preload.js"),
 		},
 		frame: false,
 		icon: config.icon,

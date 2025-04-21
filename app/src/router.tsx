@@ -19,6 +19,7 @@ import { ImExit } from "react-icons/im";
 import { FaTimes } from "react-icons/fa";
 import content from "./localization/content";
 import useLang from "./hooks/useLang";
+import UpdateNotification from "./components/UpdaterComponent";
 
 const socket = io("http://localhost:8000");
 
@@ -297,6 +298,8 @@ export const Router: FC = () => {
 					/>
 				</Routes>
 			</AuthProvider>
+
+			<UpdateNotification />
 
 			{showExitModal && (
 				<div className="fixed inset-0 z-[9999] bg-black bg-opacity-50 flex items-center justify-center p-8">
