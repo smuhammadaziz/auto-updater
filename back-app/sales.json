@@ -1,0 +1,54 @@
+{
+  "sales": [
+    {
+      "id": "698316f5-aa40-49fd-a38d-819f3ab77e5a",
+      "ksb_id": "66419856",
+      "device_id": "654651-.000000--000000--000000",
+      "date": "12.12.2024",
+      "status": "pending | success",
+      "client_id": "000000-000000-0000000",
+      "client_name": "oddiy xaridor",
+      "total_price": 500000,
+      "details": [
+        {
+          "document": "698316f5-aa40-49fd-a38d-819f3ab77e5a",
+          "client": "00000000-0000-0000-0000-000000000000",
+          "warehouse": "e51e4ee3-d689-11e7-b79f-00ac1948df3a",
+          "price_type": "e51e4ee7-d689-11e7-b79f-00ac1948df3a",
+          "rate": 12700,
+          "currency": "e51e4ee6-d689-11e7-b79f-00ac1948df3a",
+          "discount": 5,
+          "comment": "nimadir",
+          "below_cost": false
+        }
+      ],
+      "products": [
+        {
+          "product": "176713b9-8e0e-11ef-bb1b-581122da5a09",
+          "product_name": "apple",
+          "warehouse": "e51e4ee3-d689-11e7-b79f-00ac1948df3a",
+          "currency": "e51e4ee7-d689-11e7-b79f-00ac1948df3a",
+          "quantity": 5,
+          "price": 5000,
+          "sum": 25000
+        },
+        {
+          "product": "176713b9-8e0e-11ef-bb1b-581122da5a09",
+          "product_name": "apple",
+          "warehouse": "e51e4ee3-d689-11e7-b79f-00ac1948df3a",
+          "currency": "e51e4ee7-d689-11e7-b79f-00ac1948df3a",
+          "quantity": 5,
+          "price": 5000,
+          "sum": 25000
+        }
+      ],
+      "payments": [
+        {
+          "cash": "00000000-0000-0000-0000-000000000000",
+          "currency": "e51e4ee7-d689-11e7-b79f-00ac1948df3a",
+          "sum": 500000
+        }
+      ]
+    }
+  ]
+}

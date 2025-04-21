@@ -1,0 +1,39 @@
+@keyframes slideIn {
+	from {
+		opacity: 0;
+		transform: translateY(20px);
+	}
+	to {
+		opacity: 1;
+		transform: translateY(0);
+	}
+}
+
+.animate-slideIn {
+	animation: slideIn 0.5s ease-out forwards;
+}
+
+/* Add blur effect for glass morphism */
+.glass-morphism {
+	background: rgba(255, 255, 255, 0.7);
+	backdrop-filter: blur(10px);
+	-webkit-backdrop-filter: blur(10px);
+}
+
+
+@keyframes marquee {
+	0% {
+		transform: translateX(100%);
+	}
+
+	100% {
+		transform: translateX(-100%);
+	}
+}
+
+.animate-marquee {
+	animation: marquee 20s linear infinite;
+	/* Adjust the duration as needed */
+	display: inline-block;
+	white-space: nowrap;
+}

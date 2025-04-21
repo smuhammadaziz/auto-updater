@@ -1,0 +1,93 @@
+Pages:
+
+1. KSB-ID intro
+
+- app birinchi marta ochilganda shu page chiqishi kerak
+- 
+
+============================================================================================
+2. login Pages
+
+- ksb-id saqlangandan keyin, doimo login page ga kirishi kerak, birinchi kirganda
+- 
+
+============================================================================================
+3. home Pages
+
+- first sync bolganda "sync" knopkadagi barcha functionlarni qoyib chiqish kerak
+- summa, total customers and products ga doimo socket io ishlatish kerak ekan
+- qilingan summani 1kunligini chiqarish kerak va grafik uchun ham korsatish kere
+-
+
+============================================================================================
+4. customers page
+
+- 
+
+============================================================================================
+5. products page
+
+- 
+
+============================================================================================
+6. settings page
+
+- user settings uchun dizayn qilish kerak va ularni chiqarish kerak
+-
+
+============================================================================================
+7. sales Pages
+
+- all products uchun socket io ishlatish kerak
+- tepaga olish uchun ham socket io ishlatish kerak
+- summa uchun va naqt + plastik karta uchun ham socket io ishlatish kerak
+- savdolarni yuborishni qilish backend bilan
+
+
+============================================================================================
+============================================================================================
+============================================================================================
+
+Components: 
+
+1. Titlebar - login pagedagi
+
+-
+
+============================================================================================
+2. Titlebar - home pagedagi
+
+- yangilanish uchun internetni majburiy qilish
+-
+
+============================================================================================
+3. Header - home pagedagi
+
+- sync knopka bosilganda 10minut kutadigan qilib qoyish kerak (timer: 10 min)
+- sync bosilib, agar boshqa component ga otib ketsa, header yangilanib ketishini togrilash
+- valyuta yangilanib turishi uchun ham socket.io ishlatish kerak
+-
+
+============================================================================================
+4. Titlebar - sales pagedagi
+
+- 
+
+
+==========================================================
+==========================================================
+==========================================================
+==========================================================
+==========================================================
+==========================================================
+
+
+backend
+
+- sales ni yuborishni qilish kerak, yuborilsa, delivered status, yuborilmasa, not delivered.
+- user settingsda qayta qayta table ga yozishini oldini olish kere. 
+- sales da empty products array bo'lsa, har 2kunda o'chirib yuboradigan qilish kerak.
+- agar product updatedan yangi datalar kelsa, ularni yozib qoyadigan qilish kerak. 
+
+
+sync tugagandan keyin, crm ga zapros yuborish kerak

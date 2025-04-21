@@ -1,0 +1,48 @@
+- savdo ni backend dan yuborayotganda agar xatoligi bo'lsa chiqaradigan qilish kerak, yuborilganlari 
+"delivered" bo'ladi, yuborilmasa error console da chiqishi kere men korishim uchun
+
+- set time out vaqtni ham shunaqa qilish kerak, barcha joyga set time out berib ketish kerak,
+
+- sales page dagi all products table doimo yangilanib turishi kerak, har 1 yoki 2 minutda, yangilanish
+bor yoki yoqligidan qatiy nazar
+
+- savdo oynasida "NAQD + ONLINE" ni ishlatib qoyish kerak, va yana qilish kerak bolgan narsa: 
+2ta kassaga pul tushadigan qilish (1C tomondan tayyor emas)
+
+- ping tekshirayotganda "empty password" bolsa, serverga ulanmagan degan xatolikni togrilash kere
+
+- login da agar boshqa ksb_id ni useri bolsa chiqib qolishini togrilash kere
+
+===================================================================
+
+/settings API
+
+"box": false - 
+
+"one_row": true - agar bu true bolsa, 1ta mahsulot yana qoshils, oziga qoshiladi, agar false bolsa,
+yangi row qilinib, yangi rowga olinishi kere
+
+ "one_qty": false - agar true bo'lsa, mahsulotni ustiga 2marta bosganda tepaga qoshilib qoladi,
+agar "false" bolsa, modal ochiladi
+
+"change_price": true - agar false bo'lsa, barcha foydalanuvchilar uchun narxni o'zgartirish yo'q bo'ladi,
+agar true bolsa, foydalanuvchi ichidagi yani "user_settings" API sidagi ruxsatga qarashim kere,
+bu yerda bazi foydalanuvchilarga ruxsat berilmagan bolishi mumkin
+
+
+
+====================================================================
+- /settings ni qilish kerak, toliq. 
+
+- avto savdo yuborishda xatolik bor, shuni togrilash kerak, agar savdo yo'q bolsa, 
+yubormaydigan qilish kerak va birinchi kirganda ham yuborishni togrilash kerak
+
+- savdo yuborilganda window.location.reload() agar internet mavjud va savdo yuborilganda bolishi kere,
+agar xatolik chiqsa, reload bolmasligi kerak. xatolik, bitta modalda chiqishi kerak
+
+- payment uchun yangi modal qilish
+
+
+=============================================
+
+

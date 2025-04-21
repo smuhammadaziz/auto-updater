@@ -1,0 +1,39 @@
+[
+	{
+		"id": 1,
+		"name": "John",
+		"surname": "Doe",
+		"email": "john.doe@example.com",
+		"age": 29,
+		"phone_number": "+1234567890",
+		"status": "Active"
+	},
+	{
+		"id": 2,
+		"name": "Jane",
+		"surname": "Smith",
+		"email": "jane.smith@example.com",
+		"age": 34,
+		"phone_number": "+1987654321",
+		"status": "Inactive"
+	},
+	{
+		"id": 3,
+		"name": "David",
+		"surname": "Johnson",
+		"email": "david.johnson@example.com",
+		"age": 45,
+		"phone_number": "+1122334455",
+		"status": "Active"
+	},
+	{
+		"id": 4,
+		"name": "Emily",
+		"surname": "Davis",
+		"email": "emily.davis@example.com",
+		"age": 39,
+		"phone_number": "+1223344556",
+		"status": "Active"
+	}
+]
+
