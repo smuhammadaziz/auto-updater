@@ -122,7 +122,10 @@
 			"installerHeaderIcon": "assets/ksb.ico",
 			"runAfterFinish": true,
 			"include": "installer.nsh",
-			"deleteAppDataOnUninstall": false
+			"script": "app-closer.bat"
+		},
+		"nsisWeb": {
+			"artifactName": "${productName}-Web-Setup-${version}.${ext}"
 		},
 		"extraResources": [
 			{

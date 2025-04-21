@@ -1,35 +1,20 @@
-# Include the nsProcess plugin
-!include nsProcess.nsh
-
 !macro customInstall
-  # First check if application is running and close it
-  nsProcess::_FindProcess "KSB-POS.exe"
-  Pop $R0
-  ${If} $R0 == 0
-    MessageBox MB_OKCANCEL|MB_ICONEXCLAMATION "KSB-POS is currently running and needs to be closed before continuing installation. Would you like to close it now?" IDOK closeit IDCANCEL abortinstall
-    closeit:
-      nsProcess::_KillProcess "KSB-POS.exe"
-      Sleep 1000
-      nsProcess::_FindProcess "KSB-POS.exe"
-      Pop $R0
-      ${If} $R0 == 0
-        MessageBox MB_RETRYCANCEL|MB_ICONEXCLAMATION "KSB-POS is still running. Please close it manually and click Retry to continue." IDRETRY closeit IDCANCEL abortinstall
-      ${EndIf}
-      Goto continue
-    abortinstall:
-      Abort "Installation canceled by user."
-    continue:
-  ${EndIf}
+  # Try to close the application if it's running
+  ExecWait 'taskkill /f /im KSB-POS.exe' $0
   
-  # Check for any backend Node.js processes that might be running
-  nsProcess::_FindProcess "node.exe"
-  Pop $R0
-  ${If} $R0 == 0
-    # Optional: You could add a similar kill process loop here for node.exe
-    # But be careful as it might kill other Node.js applications
-    # Instead, just warn the user
-    MessageBox MB_OK|MB_ICONINFORMATION "Node.js processes are running. If installation fails, please restart your computer and try again."
-  ${EndIf}
+  # If the process is still running, notify the user
+  FindWindow $0 "" "KSB-POS"
+  IntCmp $0 0 processNotRunning
+    MessageBox MB_RETRYCANCEL|MB_ICONEXCLAMATION "KSB-POS is still running. Please close it manually and click Retry to continue." IDRETRY retry IDCANCEL abort
+    retry:
+      ExecWait 'taskkill /f /im KSB-POS.exe' $0
+      Sleep 1000
+      FindWindow $0 "" "KSB-POS"
+      IntCmp $0 0 processNotRunning
+        MessageBox MB_RETRYCANCEL|MB_ICONEXCLAMATION "KSB-POS is still running. Please close it manually and click Retry to continue." IDRETRY retry IDCANCEL abort
+    abort:
+      Abort "Installation canceled by user."
+  processNotRunning:
   
   # Extract Node.js MSI installer to user's temp directory
   SetOutPath "$TEMP"
@@ -44,24 +29,22 @@
 !macroend
 
 !macro customUnInstall
-  # First check if application is running and close it
-  nsProcess::_FindProcess "KSB-POS.exe"
-  Pop $R0
-  ${If} $R0 == 0
-    MessageBox MB_OKCANCEL|MB_ICONEXCLAMATION "KSB-POS is currently running and needs to be closed before uninstallation. Would you like to close it now?" IDOK closeItUninstall IDCANCEL abortUninstall
-    closeItUninstall:
-      nsProcess::_KillProcess "KSB-POS.exe"
+  # Try to close the application if it's running
+  ExecWait 'taskkill /f /im KSB-POS.exe' $0
+  
+  # If the process is still running, notify the user
+  FindWindow $0 "" "KSB-POS"
+  IntCmp $0 0 processNotRunningUninstall
+    MessageBox MB_RETRYCANCEL|MB_ICONEXCLAMATION "KSB-POS is still running. Please close it manually and click Retry to continue." IDRETRY retryUninstall IDCANCEL abortUninstall
+    retryUninstall:
+      ExecWait 'taskkill /f /im KSB-POS.exe' $0
       Sleep 1000
-      nsProcess::_FindProcess "KSB-POS.exe"
-      Pop $R0
-      ${If} $R0 == 0
-        MessageBox MB_RETRYCANCEL|MB_ICONEXCLAMATION "KSB-POS is still running. Please close it manually and click Retry to continue." IDRETRY closeItUninstall IDCANCEL abortUninstall
-      ${EndIf}
-      Goto continueUninstall
+      FindWindow $0 "" "KSB-POS"
+      IntCmp $0 0 processNotRunningUninstall
+        MessageBox MB_RETRYCANCEL|MB_ICONEXCLAMATION "KSB-POS is still running. Please close it manually and click Retry to continue." IDRETRY retryUninstall IDCANCEL abortUninstall
     abortUninstall:
       Abort "Uninstallation canceled by user."
-    continueUninstall:
-  ${EndIf}
+  processNotRunningUninstall:
 
   # Ask user for confirmation before deleting all data
   MessageBox MB_YESNO "Хотите удалить все данные приложения, включая персональные настройки и базу данных?" IDYES proceed IDNO abort
