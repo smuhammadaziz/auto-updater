@@ -413,7 +413,7 @@ function LoginPageKSB({ socket, verified }) {
 
 	return (
 		<Layout>
-			<div className="flex fixed w-full items-center justify-center h-screen bg-gradient-to-br from-blue-200 to-indigo-700">
+			<div className="flex fixed w-full items-center justify-center h-screen bg-gradient-to-br from-red-200 to-indigo-700">
 				<LoginForm
 					userType={userType}
 					password={password}
