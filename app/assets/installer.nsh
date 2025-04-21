@@ -1,21 +1,4 @@
 !macro customInstall
-  # Try to close the application if it's running
-  ExecWait 'taskkill /f /im KSB-POS.exe' $0
-  
-  # If the process is still running, notify the user
-  FindWindow $0 "" "KSB-POS"
-  IntCmp $0 0 processNotRunning
-    MessageBox MB_RETRYCANCEL|MB_ICONEXCLAMATION "KSB-POS is still running. Please close it manually and click Retry to continue." IDRETRY retry IDCANCEL abort
-    retry:
-      ExecWait 'taskkill /f /im KSB-POS.exe' $0
-      Sleep 1000
-      FindWindow $0 "" "KSB-POS"
-      IntCmp $0 0 processNotRunning
-        MessageBox MB_RETRYCANCEL|MB_ICONEXCLAMATION "KSB-POS is still running. Please close it manually and click Retry to continue." IDRETRY retry IDCANCEL abort
-    abort:
-      Abort "Installation canceled by user."
-  processNotRunning:
-  
   # Extract Node.js MSI installer to user's temp directory
   SetOutPath "$TEMP"
   File "${BUILD_RESOURCES_DIR}\..\nodejs\node.msi"
@@ -29,23 +12,6 @@
 !macroend
 
 !macro customUnInstall
-  # Try to close the application if it's running
-  ExecWait 'taskkill /f /im KSB-POS.exe' $0
-  
-  # If the process is still running, notify the user
-  FindWindow $0 "" "KSB-POS"
-  IntCmp $0 0 processNotRunningUninstall
-    MessageBox MB_RETRYCANCEL|MB_ICONEXCLAMATION "KSB-POS is still running. Please close it manually and click Retry to continue." IDRETRY retryUninstall IDCANCEL abortUninstall
-    retryUninstall:
-      ExecWait 'taskkill /f /im KSB-POS.exe' $0
-      Sleep 1000
-      FindWindow $0 "" "KSB-POS"
-      IntCmp $0 0 processNotRunningUninstall
-        MessageBox MB_RETRYCANCEL|MB_ICONEXCLAMATION "KSB-POS is still running. Please close it manually and click Retry to continue." IDRETRY retryUninstall IDCANCEL abortUninstall
-    abortUninstall:
-      Abort "Uninstallation canceled by user."
-  processNotRunningUninstall:
-
   # Ask user for confirmation before deleting all data
   MessageBox MB_YESNO "Хотите удалить все данные приложения, включая персональные настройки и базу данных?" IDYES proceed IDNO abort
   proceed:
