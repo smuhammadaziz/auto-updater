@@ -28,8 +28,7 @@ function LoginForm({
 	return (
 		<div className="bg-white p-12 rounded-xl shadow-2xl w-full max-w-lg transform transition-transform duration-300">
 			<h2 className="text-4xl font-bold mb-6 text-center text-gray-800">
-				{/* {content[language].login.login} */}
-				Login form page page
+				{content[language].login.login}
 			</h2>
 
 			<UserTypeDropdown
