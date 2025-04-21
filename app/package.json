@@ -1,6 +1,6 @@
 {
 	"name": "ksb-pos",
-	"version": "3.0.0",
+	"version": "1.0.0",
 	"private": true,
 	"description": "KSB-POS",
 	"author": "KSB-SOFT",
@@ -98,12 +98,6 @@
 					"arch": [
 						"x64"
 					]
-				},
-				{
-					"target": "portable",
-					"arch": [
-						"x64"
-					]
 				}
 			],
 			"icon": "assets/ksb.ico",
@@ -127,7 +121,8 @@
 			"uninstallerIcon": "assets/ksb.ico",
 			"installerHeaderIcon": "assets/ksb.ico",
 			"runAfterFinish": true,
-			"include": "installer.nsh"
+			"include": "installer.nsh",
+			"deleteAppDataOnUninstall": false
 		},
 		"extraResources": [
 			{

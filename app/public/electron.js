@@ -67,16 +67,40 @@ function startBackend() {
 	});
 }
 
+function terminateApplication() {
+	// Force quit all windows
+	BrowserWindow.getAllWindows().forEach((window) => {
+		if (!window.isDestroyed()) {
+			window.destroy();
+		}
+	});
+
+	// Terminate backend
+	terminateBackend();
+
+	// Make sure we're really quitting
+	config.isQuiting = true;
+
+	// Give a small delay to allow processes to terminate before app quits
+	setTimeout(() => {
+		app.exit(0);
+	}, 200);
+}
+
 function terminateBackend() {
-	if (backendProcess && !config.isDev) {
-		if (process.platform === "win32") {
-			exec(`taskkill /pid ${backendProcess.pid} /T /F`, (error) => {
-				if (error) {
-					console.error("Error killing backend process:", error);
-				}
-			});
-		} else {
-			backendProcess.kill("SIGTERM");
+	if (backendProcess) {
+		try {
+			if (process.platform === "win32") {
+				exec(`taskkill /pid ${backendProcess.pid} /T /F`, (error) => {
+					if (error) {
+						console.error("Error killing backend process:", error);
+					}
+				});
+			} else {
+				backendProcess.kill("SIGTERM");
+			}
+		} catch (error) {
+			console.error("Error terminating backend:", error);
 		}
 	}
 }
@@ -148,7 +172,12 @@ ipcMain.on("start-download", () => {
 
 ipcMain.on("quit-and-install", () => {
 	log.info("Quitting and installing update...");
-	autoUpdater.quitAndInstall(false, true);
+	// Make sure we properly close all windows and processes
+	terminateApplication();
+	// Short delay before installing update to ensure processes are terminated
+	setTimeout(() => {
+		autoUpdater.quitAndInstall(false, true);
+	}, 500);
 });
 
 ipcMain.on("app_version", (event) => {
@@ -158,6 +187,12 @@ ipcMain.on("app_version", (event) => {
 app.on("before-quit", () => {
 	config.isQuiting = true;
 	terminateBackend();
+	// Force close any windows that might be open
+	BrowserWindow.getAllWindows().forEach((window) => {
+		if (!window.isDestroyed()) {
+			window.destroy();
+		}
+	});
 });
 
 app.on("window-all-closed", () => {
@@ -168,4 +203,18 @@ app.on("activate", () => {
 	if (BrowserWindow.getAllWindows().length === 0)
 		config.mainWindow = createMainWindow();
 });
+
+if (process.argv.includes("--updated")) {
+	// This is a fresh launch after update, clean up any old processes
+	if (process.platform === "win32") {
+		const appName = path.basename(app.getPath("exe"));
+		exec(
+			`wmic process where "name='${appName}' and not processid='${process.pid}'" delete`,
+			(error) => {
+				if (error)
+					console.error("Error cleaning old processes:", error);
+			},
+		);
+	}
+}
 
