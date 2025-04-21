@@ -8,12 +8,12 @@ function UpdateNotification() {
 	const [errorMessage, setErrorMessage] = useState(null);
 
 	useEffect(() => {
-		if (!window.electronAPI) {
-			console.warn("window.electronAPI is not available");
+		if (!window.ipcRenderer) {
+			console.warn("window.ipcRenderer is not available");
 			return;
 		}
 
-		const handleUpdateAvailable = (info) => {
+		const handleUpdateAvailable = (event, info) => {
 			console.log("Update available:", info);
 			setUpdateInfo(info);
 			setIsVisible(true);
@@ -22,18 +22,18 @@ function UpdateNotification() {
 			setErrorMessage(null);
 		};
 
-		const handleDownloadProgress = (progress) => {
+		const handleDownloadProgress = (event, progress) => {
 			console.log("Download progress:", progress);
 			setProgressInfo(progress);
 		};
 
-		const handleUpdateDownloaded = (info) => {
+		const handleUpdateDownloaded = (event, info) => {
 			console.log("Update downloaded:", info);
 			setIsDownloaded(true);
 			setProgressInfo(null);
 		};
 
-		const handleUpdateError = (message) => {
+		const handleUpdateError = (event, message) => {
 			console.error("Update error:", message);
 			setErrorMessage(
 				`Update Error: ${message}. Please try again later or restart the app.`,
@@ -43,27 +43,27 @@ function UpdateNotification() {
 			setProgressInfo(null);
 		};
 
-		window.electronAPI.onUpdateAvailable(handleUpdateAvailable);
-		window.electronAPI.onDownloadProgress(handleDownloadProgress);
-		window.electronAPI.onUpdateDownloaded(handleUpdateDownloaded);
-		window.electronAPI.onUpdateError(handleUpdateError);
+		window.ipcRenderer.on("update-available", handleUpdateAvailable);
+		window.ipcRenderer.on("download-progress", handleDownloadProgress);
+		window.ipcRenderer.on("update-downloaded", handleUpdateDownloaded);
+		window.ipcRenderer.on("update-error", handleUpdateError);
 
 		return () => {
-			window.electronAPI.removeAllListeners("update-available");
-			window.electronAPI.removeAllListeners("download-progress");
-			window.electronAPI.removeAllListeners("update-downloaded");
-			window.electronAPI.removeAllListeners("update-error");
+			window.ipcRenderer.removeAllListeners("update-available");
+			window.ipcRenderer.removeAllListeners("download-progress");
+			window.ipcRenderer.removeAllListeners("update-downloaded");
+			window.ipcRenderer.removeAllListeners("update-error");
 		};
 	}, []);
 
 	const startDownload = () => {
 		setErrorMessage(null);
 		setProgressInfo({ percent: 0 });
-		window.electronAPI.startDownload();
+		window.ipcRenderer.send("start-download");
 	};
 
 	const restartApp = () => {
-		window.electronAPI.quitAndInstall();
+		window.ipcRenderer.send("quit-and-install");
 	};
 
 	const closeNotification = () => {
