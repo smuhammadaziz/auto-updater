@@ -172,9 +172,7 @@ ipcMain.on("start-download", () => {
 
 ipcMain.on("quit-and-install", () => {
 	log.info("Quitting and installing update...");
-	// Make sure we properly close all windows and processes
 	terminateApplication();
-	// Short delay before installing update to ensure processes are terminated
 	setTimeout(() => {
 		autoUpdater.quitAndInstall(false, true);
 	}, 500);
