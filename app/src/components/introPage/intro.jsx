@@ -346,6 +346,9 @@ function IntroPageKSB({ setVerified }) {
 							</button>
 						</div>
 					</div>
+					<p className="absolute inset-0  text-center mt-10 text-slate-900">
+						v1.0.1
+					</p>
 				</div>
 			)}
 			{showNetworkModal && <NetworkModal />}
