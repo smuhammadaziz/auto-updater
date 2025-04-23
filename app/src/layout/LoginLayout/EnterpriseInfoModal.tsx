@@ -65,7 +65,7 @@ export const EnterpriseInfoModal: FC<EnterpriseInfoModalProps> = ({
 		{
 			icon: TbVersionsFilled,
 			label: "Версия",
-			value: `1.0.2`,
+			value: `1.0.0`,
 		},
 	];
 
