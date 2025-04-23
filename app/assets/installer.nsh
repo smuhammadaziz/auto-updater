@@ -1,5 +1,6 @@
-!macro customInstall
-
+!macro customInstall  
+  # Create startup entry for the server
+  CreateShortCut "$SMSTARTUP\KSB-POS-Server.lnk" "$INSTDIR\KSB-POS.exe" "" "$INSTDIR\assets\ksb.ico"
 !macroend
 
 !macro customUnInstall
