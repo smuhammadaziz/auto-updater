@@ -347,7 +347,7 @@ function IntroPageKSB({ setVerified }) {
 						</div>
 					</div>
 					<p className="absolute top-0 text-center mt-10 text-slate-900">
-						v1.0.2
+						v1.0.3
 					</p>
 				</div>
 			)}
