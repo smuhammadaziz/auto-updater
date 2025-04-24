@@ -279,10 +279,10 @@ type Content = {
 const content: Content = {
 	uz: {
 		intro: {
-			welcome: "KSB Порталга Хуш Келибсиз",
+			welcome: "KSB порталга хуш келибсиз",
 			please: "Давом етиш учун KSB-ID ни киритинг",
 			enter: "KSB-ID ни киритинг",
-			send: "Тизимга Кириш",
+			send: "Тизимга кириш",
 			network: "Тармоққа уланиш йўқ",
 			try: "Қайта уланишга уриниш...",
 			pleaseEnterKsb: "Илтимос, КСБ ИД ни киритинг",

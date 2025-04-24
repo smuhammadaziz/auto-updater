@@ -277,78 +277,86 @@ function IntroPageKSB({ setVerified }) {
 			{loading ? (
 				<Loader />
 			) : (
-				<div className="flex fixed w-full h-screen items-center justify-center bg-gradient-to-br from-blue-100 to-indigo-600">
-					<div className="bg-white p-10 rounded-2xl shadow-xl transform hover:scale-105 transition-transform duration-300 space-y-8 max-w-md">
-						<div className="text-center space-y-4">
+				<div className="flex fixed w-full h-screen items-center justify-center bg-gradient-to-r from-gray-100 to-blue-50">
+					<div className="bg-white p-8 rounded-lg shadow-2xl border-t-4 border-blue-500 w-full max-w-md">
+						<div className="flex items-center justify-between mb-6">
 							<img
 								src={logo}
 								alt="logo"
-								className="w-48 mx-auto"
+								className="h-12 object-contain"
 							/>
-							<h1 className="text-3xl font-bold text-gray-800">
-								{content[language].intro.welcome}
-							</h1>
-							<p className="text-gray-600">
-								{content[language].intro.please}
-							</p>
+							<div className="bg-blue-100 text-blue-600 text-xs font-medium px-3 py-1 rounded-full">
+								v1.0.0
+							</div>
 						</div>
-						<div className="relative">
-							<input
-								ref={inputRef}
-								type="text"
-								placeholder={content[language].intro.enter}
-								value={ksbId}
-								onChange={(e) =>
-									setKsbId(e.target.value.slice(0, 8))
-								}
-								onKeyDown={handleKeyDown}
-								maxLength={8}
-								disabled={!isOnline || !canInteract}
-								className={`w-full px-5 py-3 pl-10 border border-gray-300 rounded-lg text-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-400 shadow-sm transition duration-200 ${
-									!isOnline || !canInteract
-										? "bg-gray-200 cursor-not-allowed"
-										: ""
-								}`}
-							/>
-							<FaKey
-								className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"
-								size={20}
-							/>
+
+						<h1 className="text-2xl font-bold text-gray-800 mb-1">
+							{content[language].intro.welcome}
+						</h1>
+						<p className="text-gray-500 text-sm mb-6">
+							{content[language].intro.please}
+						</p>
+
+						<div className="bg-gray-50 p-4 rounded-lg mb-6">
+							<label className="block text-xs font-medium text-gray-500 mb-2">
+								KSB-ID
+							</label>
+							<div className="relative">
+								<input
+									ref={inputRef}
+									type="text"
+									placeholder={content[language].intro.enter}
+									value={ksbId}
+									onChange={(e) =>
+										setKsbId(e.target.value.slice(0, 8))
+									}
+									onKeyDown={handleKeyDown}
+									maxLength={8}
+									disabled={!isOnline || !canInteract}
+									className={`w-full px-4 py-3 pl-10 border border-gray-200 rounded-md text-gray-800 focus:outline-none focus:ring-1 focus:ring-blue-400 focus:border-blue-400 ${
+										!isOnline || !canInteract
+											? "bg-gray-100 cursor-not-allowed"
+											: ""
+									}`}
+								/>
+								<FaKey
+									className="absolute left-3 top-1/2 transform -translate-y-1/2 text-blue-400"
+									size={18}
+								/>
+							</div>
 						</div>
+
 						{!canInteract && (
-							<div className="text-center text-gray-600 animate-pulse">
-								{/* Please wait {countdown} seconds... */}
+							<div className="text-center text-gray-600 animate-pulse bg-yellow-50 p-2 rounded-md mb-4">
 								Илтимос {countdown} секунд кутинг...
 							</div>
 						)}
-						<div>
-							<button
-								onClick={handleSignIn}
-								disabled={
-									!isOnline || isSubmitting || !canInteract
-								}
-								className={`w-full py-3 text-white font-semibold rounded-lg shadow-lg transition duration-300 text-lg ${
-									isOnline && !isSubmitting && canInteract
-										? "bg-blue-600 hover:bg-blue-700"
-										: "bg-gray-400 cursor-not-allowed"
-								}`}
-							>
-								{isSubmitting ? (
-									<div className="flex items-center justify-center space-x-2">
-										<div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin" />
-										<span>
-											{content[language].intro.checking}
-										</span>
-									</div>
-								) : (
-									content[language].intro.send
-								)}
-							</button>
-						</div>
+
+						<button
+							onClick={handleSignIn}
+							disabled={!isOnline || isSubmitting || !canInteract}
+							className={`w-full py-3 text-white font-medium rounded-md transition duration-200 ${
+								isOnline && !isSubmitting && canInteract
+									? "bg-blue-500 hover:bg-blue-600"
+									: "bg-gray-300 cursor-not-allowed"
+							}`}
+						>
+							{isSubmitting ? (
+								<div className="flex items-center justify-center space-x-2">
+									<div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
+									<span>
+										{content[language].intro.checking}
+									</span>
+								</div>
+							) : (
+								content[language].intro.send
+							)}
+						</button>
+
+						{/* <div className="mt-6 pt-4 border-t border-gray-100 flex items-center justify-between text-xs text-gray-500">
+							<span>v1.0.0</span>
+						</div> */}
 					</div>
-					<p className="absolute top-0 text-center mt-10 text-slate-900">
-						v1.0.4
-					</p>
 				</div>
 			)}
 			{showNetworkModal && <NetworkModal />}
