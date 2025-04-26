@@ -31,3 +31,4 @@ window.electronAPI = {
 
 // This is just for debugging purposes - to confirm preload.js is loaded
 console.log("Preload script loaded successfully!");
+

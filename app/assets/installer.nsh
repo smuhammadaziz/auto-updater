@@ -18,7 +18,7 @@
     # Remove startup shortcut
     Delete "$SMSTARTUP\KSB-POS-Server.lnk"
     
-    # Remove app data - ONLY IF UNINSTALLING COMPLETELY
+    # Remove app data
     RMDir /r "$APPDATA\KSB-POS"
     RMDir /r "$LOCALAPPDATA\KSB-POS"
     
@@ -28,20 +28,18 @@
     # Remove temp files
     Delete "$TEMP\KSB-POS-*"
     
-    # Clean up electron cache - KEEP USER DATA INTACT
+    # Clean up electron cache
     RMDir /r "$APPDATA\KSB-POS\Cache"
     RMDir /r "$APPDATA\KSB-POS\Code Cache"
     RMDir /r "$APPDATA\KSB-POS\GPUCache"
-    
-    # DO NOT remove local storage or session storage during updates!
-    # RMDir /r "$APPDATA\KSB-POS\Local Storage"  <- COMMENT THIS OUT
-    # RMDir /r "$APPDATA\KSB-POS\Session Storage" <- COMMENT THIS OUT
+    RMDir /r "$APPDATA\KSB-POS\Local Storage"
+    RMDir /r "$APPDATA\KSB-POS\Session Storage"
     
     # Remove logs
     RMDir /r "$APPDATA\KSB-POS\logs"
     Delete "$APPDATA\KSB-POS\*.log"
     
-    # Clean registry entries - ONLY FOR FULL UNINSTALL
+    # Clean registry entries
     DeleteRegKey HKCU "Software\KSB-POS"
     DeleteRegKey HKLM "Software\KSB-POS"
     
