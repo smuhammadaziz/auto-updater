@@ -286,7 +286,7 @@ function IntroPageKSB({ setVerified }) {
 								className="h-12 object-contain"
 							/>
 							<div className="bg-blue-100 text-blue-600 text-xs font-medium px-3 py-1 rounded-full">
-								v1.0.6
+								v1.0.7
 							</div>
 						</div>
 

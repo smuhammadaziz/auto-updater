@@ -29,12 +29,14 @@ function startBackend() {
 		? path.join(process.resourcesPath, "back-app")
 		: path.join(__dirname, "../back-app");
 
+	// First install dependencies
 	exec("npm install", { cwd: backendPath }, (error, stdout, stderr) => {
 		if (error) {
 			console.error(`Error installing dependencies: ${error.message}`);
 			return;
 		}
 
+		// Then start the server using spawn instead of exec to keep reference
 		backendProcess = spawn("npm", ["start"], {
 			cwd: backendPath,
 			shell: true,
@@ -91,6 +93,7 @@ app.on("ready", async () => {
 		"Application running on background! See application tray.",
 	);
 
+	// 🔥 Auto-updater checks (only if packaged)
 	if (app.isPackaged) {
 		autoUpdater.autoDownload = false;
 
@@ -135,7 +138,7 @@ ipcMain.on("start-download", () => {
 
 ipcMain.on("quit-and-install", () => {
 	log.info("Quitting and installing update...");
-	// terminateApplication();
+	terminateApplication();
 	setTimeout(() => {
 		autoUpdater.quitAndInstall(false, true);
 	}, 500);
