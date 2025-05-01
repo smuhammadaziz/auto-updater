@@ -23,19 +23,6 @@ log.info("App starting...");
 // Add this variable to store the backend process
 let backendProcess = null;
 
-function clearProductionDatabase() {
-	if (process.env.NODE_ENV === "production") {
-		const backendPath = path.join(process.resourcesPath, "back-app");
-		const dbPath = path.join(backendPath, "src", "storage.db");
-		try {
-			fs.writeFileSync(dbPath, "");
-			console.log("Production database cleared successfully");
-		} catch (error) {
-			console.error("Error clearing production database:", error);
-		}
-	}
-}
-
 function startBackend() {
 	const isProduction = !config.isDev;
 	const backendPath = isProduction
@@ -67,46 +54,23 @@ function startBackend() {
 	});
 }
 
-function terminateApplication() {
-	// Force quit all windows
-	BrowserWindow.getAllWindows().forEach((window) => {
-		if (!window.isDestroyed()) {
-			window.destroy();
-		}
-	});
-
-	// Terminate backend
-	terminateBackend();
-
-	// Make sure we're really quitting
-	config.isQuiting = true;
-
-	// Give a small delay to allow processes to terminate before app quits
-	setTimeout(() => {
-		app.exit(0);
-	}, 200);
-}
-
 function terminateBackend() {
-	if (backendProcess) {
-		try {
-			if (process.platform === "win32") {
-				exec(`taskkill /pid ${backendProcess.pid} /T /F`, (error) => {
-					if (error) {
-						console.error("Error killing backend process:", error);
-					}
-				});
-			} else {
-				backendProcess.kill("SIGTERM");
-			}
-		} catch (error) {
-			console.error("Error terminating backend:", error);
+	if (backendProcess && !config.isDev) {
+		// Only terminate in production mode
+		// On Windows, we need to kill the entire process tree
+		if (process.platform === "win32") {
+			exec(`taskkill /pid ${backendProcess.pid} /T /F`, (error) => {
+				if (error) {
+					console.error("Error killing backend process:", error);
+				}
+			});
+		} else {
+			backendProcess.kill("SIGTERM");
 		}
 	}
 }
 
 app.on("ready", async () => {
-	clearProductionDatabase();
 	startBackend();
 
 	config.mainWindow = await createMainWindow();
@@ -127,7 +91,6 @@ app.on("ready", async () => {
 		"Application running on background! See application tray.",
 	);
 
-	// 🔥 Auto-updater checks (only if packaged)
 	if (app.isPackaged) {
 		autoUpdater.autoDownload = false;
 
@@ -201,18 +164,4 @@ app.on("activate", () => {
 	if (BrowserWindow.getAllWindows().length === 0)
 		config.mainWindow = createMainWindow();
 });
-
-if (process.argv.includes("--updated")) {
-	// This is a fresh launch after update, clean up any old processes
-	if (process.platform === "win32") {
-		const appName = path.basename(app.getPath("exe"));
-		exec(
-			`wmic process where "name='${appName}' and not processid='${process.pid}'" delete`,
-			(error) => {
-				if (error)
-					console.error("Error cleaning old processes:", error);
-			},
-		);
-	}
-}
 
