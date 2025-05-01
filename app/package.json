@@ -131,7 +131,8 @@
 				"filter": [
 					"src/**/*",
 					"package.json",
-					"package-lock.json"
+					"package-lock.json",
+					"!src/storage.db"
 				]
 			}
 		]
