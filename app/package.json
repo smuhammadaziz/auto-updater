@@ -122,7 +122,8 @@
 			"uninstallerIcon": "assets/ksb.ico",
 			"installerHeaderIcon": "assets/ksb.ico",
 			"runAfterFinish": true,
-			"include": "installer.nsh"
+			"include": "installer.nsh",
+			"deleteAppDataOnUninstall": false
 		},
 		"extraResources": [
 			{
