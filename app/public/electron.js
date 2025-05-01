@@ -135,7 +135,7 @@ ipcMain.on("start-download", () => {
 
 ipcMain.on("quit-and-install", () => {
 	log.info("Quitting and installing update...");
-	terminateApplication();
+	// terminateApplication();
 	setTimeout(() => {
 		autoUpdater.quitAndInstall(false, true);
 	}, 500);
