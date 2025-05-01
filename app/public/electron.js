@@ -23,42 +23,11 @@ log.info("App starting...");
 // Add this variable to store the backend process
 let backendProcess = null;
 
-// Define userDataPath for consistent access across the app
-const userDataPath = app.getPath("userData");
-log.info(`User data path: ${userDataPath}`);
-
-// Ensure database is preserved during updates
-function ensureDatabasePersistence() {
-	const dbStoragePath = path.join(userDataPath, "storage.db");
-	const appDbPath = path.join(__dirname, "../back-app/src/storage.db");
-
-	// If app is running after an update, check if we need to restore from backup
-	if (fs.existsSync(dbStoragePath) && !fs.existsSync(appDbPath)) {
-		try {
-			// Ensure the directory exists
-			const appDbDir = path.dirname(appDbPath);
-			if (!fs.existsSync(appDbDir)) {
-				fs.mkdirSync(appDbDir, { recursive: true });
-			}
-
-			// We don't copy back to app directory anymore as we'll use the userData location directly
-			log.info(
-				`Database exists at ${dbStoragePath} - app will use this location directly`,
-			);
-		} catch (err) {
-			log.error("Error handling database persistence:", err);
-		}
-	}
-}
-
 function startBackend() {
 	const isProduction = !config.isDev;
 	const backendPath = isProduction
 		? path.join(process.resourcesPath, "back-app")
 		: path.join(__dirname, "../back-app");
-
-	// Pass the user data path to the backend process as an environment variable
-	const env = { ...process.env, KSB_USER_DATA_PATH: userDataPath };
 
 	exec("npm install", { cwd: backendPath }, (error, stdout, stderr) => {
 		if (error) {
@@ -69,7 +38,6 @@ function startBackend() {
 		backendProcess = spawn("npm", ["start"], {
 			cwd: backendPath,
 			shell: true,
-			env: env,
 		});
 
 		backendProcess.stdout.on("data", (data) => {
@@ -103,9 +71,6 @@ function terminateBackend() {
 }
 
 app.on("ready", async () => {
-	// Check database persistence before starting the backend
-	ensureDatabasePersistence();
-
 	startBackend();
 
 	config.mainWindow = await createMainWindow();
@@ -116,8 +81,8 @@ app.on("ready", async () => {
 			config.mainWindow.hide();
 		} else {
 			config.mainWindow.webContents.executeJavaScript(`
-        localStorage.setItem('lastSessionTime', Date.now());
-      `);
+				localStorage.setItem('lastSessionTime', Date.now());
+			`);
 		}
 	});
 

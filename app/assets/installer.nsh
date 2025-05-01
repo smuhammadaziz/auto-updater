@@ -16,15 +16,6 @@
     
     # Remove installation directory
     RMDir /r "$INSTDIR"
-    
-    # Optional: Delete user data
-    # NOTE: We're intentionally NOT deleting the AppData directory to preserve the database
-    # If you want to give users the option:
-    MessageBox MB_YESNO "Удалить также локальную базу данных? (Рекомендуется 'Нет' если вы планируете переустановить приложение)" IDYES deletedata IDNO nodeletions
-    deletedata:
-      # Delete AppData folder - only if explicitly requested
-      RMDir /r "$APPDATA\KSB-POS"
-    nodeletions:
     goto done
   abort:
     goto done
